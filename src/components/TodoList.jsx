@@ -3,13 +3,20 @@ import { useState } from 'react';
 function TodoList({ initialTasks = [] }) {
   const [tasks, setTasks] = useState(initialTasks);
   const [taskName, setTaskName] = useState('');
+  const [personName, setPersonName] = useState('');
   const [priority, setPriority] = useState('Moyenne');
   const [searchTerm, setSearchTerm] = useState('');
 
   const addTask = () => {
-    if (taskName.trim()) {
-      setTasks([...tasks, { name: taskName, priority, completed: false }]);
+    if (taskName.trim() && personName.trim()) {
+      setTasks([...tasks, { 
+        name: taskName, 
+        person: personName,
+        priority, 
+        completed: false 
+      }]);
       setTaskName('');
+      setPersonName('');
     }
   };
 
@@ -24,7 +31,8 @@ function TodoList({ initialTasks = [] }) {
   };
 
   const filteredTasks = tasks.filter(task =>
-    task.name.toLowerCase().includes(searchTerm.toLowerCase())
+    task.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    (task.person && task.person.toLowerCase().includes(searchTerm.toLowerCase()))
   );
 
   const completedCount = tasks.filter(task => task.completed).length;
@@ -52,6 +60,7 @@ function TodoList({ initialTasks = [] }) {
           }}
         >
           <strong>{task.name}</strong> - {task.priority}
+          {task.person && <span> - 👤 {task.person}</span>}
           <button onClick={() => toggleComplete(index)}>
             {task.completed ? 'Non terminé' : 'Terminé'}
           </button>
@@ -68,6 +77,12 @@ function TodoList({ initialTasks = [] }) {
         value={taskName}
         onChange={(e) => setTaskName(e.target.value)}
       />
+      <input
+        type="text"
+        placeholder="Nom et prénom"
+        value={personName}
+        onChange={(e) => setPersonName(e.target.value)}
+      />
       <select value={priority} onChange={(e) => setPriority(e.target.value)}>
         <option>Haute</option>
         <option>Moyenne</option>
@@ -78,15 +93,4 @@ function TodoList({ initialTasks = [] }) {
   );
 }
 
-// Utilisation
-function App() {
-  return (
-    <TodoList
-      initialTasks={[
-        { name: 'Finir le projet React', priority: 'Haute', completed: false },
-        { name: 'Préparer le repas', priority: 'Moyenne', completed: false }
-      ]}
-    />
-  );
-}
 export default TodoList;

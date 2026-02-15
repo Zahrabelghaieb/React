@@ -34,12 +34,12 @@ function App() {
       <hr />
       <h2>Exercice 5 : Todo List avec Priorités</h2>
       <TodoList
-        initialTasks={[
-          { name: 'Finir le projet React', priority: 'Haute', completed: false },
-          { name: 'Préparer le repas', priority: 'Moyenne', completed: false },
-          { name: 'Aller courir', priority: 'Basse', completed: false }
-        ]}
-      />
+  initialTasks={[
+    { name: 'Finir le projet React', person: 'Zahra Belghaieb', priority: 'Haute', completed: false },
+    { name: 'Préparer le repas', person: 'Zahra Belghaieb', priority: 'Moyenne', completed: false },
+    { name: 'Aller courir', person: 'Zahra Belghaieb', priority: 'Basse', completed: false }
+  ]}
+/>
     </div>
   );
 }
