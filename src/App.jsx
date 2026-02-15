@@ -24,7 +24,7 @@ function App() {
       <h2>Exercice 3 : ColorBox</h2>
       <ColorBox 
         initialColor="#FF5733" 
-        colorOptions={['#FF5733', '#33FF57', '#3357FF', '#F333FF', '#FF33A1']}
+        colorOptions={['#881900', '#3bbd53', '#1130b8', '#F333FF', '#FF33A1']}
       />
       
       <hr />
