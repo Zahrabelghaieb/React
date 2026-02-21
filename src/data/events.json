@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "name": "Tech Conference",
+    "description": "Une conférence sur les nouvelles technologies.",
+    "price": 50,
+    "nbTickets": 3,
+    "nbParticipants": 10,
+    "like": false,
+    "image": "event1.jpg"
+  },
+  {
+    "id": 2,
+    "name": "Music Festival",
+    "description": "Un festival de musique en plein air.",
+    "price": 30,
+    "nbTickets": 0,
+    "nbParticipants": 50,
+    "like": false,
+    "image": "event2.jpg"
+  },
+  {
+    "id": 3,
+    "name": "Art Exhibition",
+    "description": "Une exposition d'art moderne.",
+    "price": 20,
+    "nbTickets": 5,
+    "nbParticipants": 25,
+    "like": false,
+    "image": "event3.jpg"
+  }
+]

@@ -4,7 +4,7 @@ import ColorBox from './components/ColorBox';
 import GradeManager from './components/GradeManager';
 import TodoList from './components/TodoList';
 
-function App() {
+/*function App() {
   return (
     <div>
       <h1>Exercices React - State et Props</h1>
@@ -40,6 +40,20 @@ function App() {
     { name: 'Aller courir', person: 'Zahra Belghaieb', priority: 'Basse', completed: false }
   ]}
 />
+    </div>
+  );
+}
+
+export default App;*/
+
+import React from 'react';
+import './App.css';
+import Events from './components/events/Events';
+
+function App() {
+  return (
+    <div className="App">
+      <Events />
     </div>
   );
 }
