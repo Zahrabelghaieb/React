@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Row, Alert, Container } from 'react-bootstrap';
 import Event from './Event';
-import eventsData from '../../data/events.json';
-
+import eventsData from "./data/events.json";
 function Events() {
   const [events, setEvents] = useState(eventsData);
   const [showWelcome, setShowWelcome] = useState(false);

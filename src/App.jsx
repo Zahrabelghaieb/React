@@ -52,8 +52,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Events from './components/events/Events';
 import {Routes, Route, BrowserRouter} from 'react-router-dom';
 import Home from './Home';
-import NavigationBar from './NavigationBar';
-import EventDetails from './EventDetails';
+import NavigationBar from './components/events/NavigationBar';
+import EventDetails from './components/events/EventDetails';
 function App() {
   return (
     <BrowserRouter>

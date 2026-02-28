@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import  events  from "./data/events";
+import events from "./data/events";
 const EventDetails = () => {
     const { name } = useParams();
     const event = events.find(e => e.name === name);
