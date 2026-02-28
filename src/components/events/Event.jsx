@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card, Col, Button, Badge } from 'react-bootstrap';
 // import placeholder from '../../assets/placeholder.jpg';
+import { Link } from 'react-router-dom';
 
 function Event({ event, buy }) {
   return (
@@ -12,8 +13,14 @@ function Event({ event, buy }) {
           alt={event.name}
           style={{ height: 200}}
         />
+        
         <Card.Body>
-          <Card.Title>{event.name}</Card.Title>
+          <Card.Title>
+            <Link to = {`/events/${event.name}`}>
+              {event.name}
+            </Link>
+            </Card.Title>
+            
           <Card.Text>{event.description}</Card.Text>
           <p><strong>Prix :</strong> {event.price} TND</p>
           <p>

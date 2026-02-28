@@ -48,13 +48,23 @@ export default App;*/
 
 import React from 'react';
 import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import Events from './components/events/Events';
-
+import {Routes, Route, BrowserRouter} from 'react-router-dom';
+import Home from './Home';
+import NavigationBar from './NavigationBar';
+import EventDetails from './EventDetails';
 function App() {
   return (
-    <div className="App">
-      <Events />
-    </div>
+    <BrowserRouter>
+      <NavigationBar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/events" element={<Events />} />
+        <Route path="/events/:name" element={<EventDetails/>} />
+        <Route path="*" element={<h1>Page Not Found</h1>} />
+      </Routes>
+  </BrowserRouter>
   );
 }
 
