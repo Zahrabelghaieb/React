@@ -10,6 +10,7 @@ function AddEvent() {
     description: "",
     price: "",
     nbTickets: "",
+    nbParticipants: 30, // ✅ Valeur par défaut
   });
 
   const [loading, setLoading] = useState(false);
@@ -30,14 +31,16 @@ function AddEvent() {
         ...form,
         price: Number(form.price),
         nbTickets: Number(form.nbTickets),
+        nbParticipants: Number(form.nbParticipants),
       });
 
-      // Reset form
+      // Reset form (garder nbParticipants par défaut)
       setForm({
         name: "",
         description: "",
         price: "",
         nbTickets: "",
+        nbParticipants: 30,
       });
 
       navigate("/events");
@@ -95,6 +98,18 @@ function AddEvent() {
             type="number"
             name="nbTickets"
             value={form.nbTickets}
+            onChange={handleChange}
+            required
+            min="0"
+          />
+        </div>
+
+        <div>
+          <label>Nombre de participants :</label><br />
+          <input
+            type="number"
+            name="nbParticipants"
+            value={form.nbParticipants}
             onChange={handleChange}
             required
             min="0"

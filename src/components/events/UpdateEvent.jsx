@@ -11,6 +11,7 @@ function UpdateEvent() {
     description: "",
     price: "",
     nbTickets: "",
+    nbParticipants: 30, // ✅ Valeur par défaut
   });
 
   const [loading, setLoading] = useState(false);
@@ -21,7 +22,10 @@ function UpdateEvent() {
     const fetchEvent = async () => {
       try {
         const res = await getallEvents(id);
-        setForm(res.data);
+        setForm({
+          ...res.data,
+          nbParticipants: res.data.nbParticipants ?? 30, // garde 30 si non défini
+        });
       } catch (err) {
         setError("Erreur lors du chargement des données");
       } finally {
@@ -46,6 +50,7 @@ function UpdateEvent() {
         ...form,
         price: Number(form.price),
         nbTickets: Number(form.nbTickets),
+        nbParticipants: Number(form.nbParticipants),
       });
 
       navigate("/events");
@@ -105,6 +110,18 @@ function UpdateEvent() {
             type="number"
             name="nbTickets"
             value={form.nbTickets}
+            onChange={handleChange}
+            required
+            min="0"
+          />
+        </div>
+
+        <div>
+          <label>Nombre de participants :</label><br />
+          <input
+            type="number"
+            name="nbParticipants"
+            value={form.nbParticipants}
             onChange={handleChange}
             required
             min="0"
