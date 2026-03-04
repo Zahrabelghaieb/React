@@ -12,6 +12,7 @@ const NavigationBar = () => {
                     <Nav>
                         <Nav.Link as={NavLink} to="/" style={({isActive}) => ({textDecoration:isActive ? 'underline' : 'none'})}>Home</Nav.Link>
                         <Nav.Link as={NavLink} to="/events" style={({isActive}) => ({textDecoration:isActive ? 'underline' : 'none'})}>Events</Nav.Link>
+                        <Nav.Link as={NavLink} to="/add" style={({isActive}) => ({textDecoration:isActive ? 'underline' : 'none'})}>Add new Event</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
             </Container>

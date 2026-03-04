@@ -50,10 +50,13 @@ import React from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Events from './components/events/Events';
-import {Routes, Route, BrowserRouter} from 'react-router-dom';
+import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import Home from './Home';
 import NavigationBar from './components/events/NavigationBar';
 import EventDetails from './components/events/EventDetails';
+import AddEvent from './components/events/AddEvent';
+import UpdateEvent from './components/events/UpdateEvent';
+
 function App() {
   return (
     <BrowserRouter>
@@ -61,10 +64,12 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/events" element={<Events />} />
-        <Route path="/events/:name" element={<EventDetails/>} />
+        <Route path="/events/:id" element={<EventDetails />} />
+        <Route path="/add" element={<AddEvent />} />
+        <Route path="/update/:id" element={<UpdateEvent />} />
         <Route path="*" element={<h1>Page Not Found</h1>} />
       </Routes>
-  </BrowserRouter>
+    </BrowserRouter>
   );
 }
 

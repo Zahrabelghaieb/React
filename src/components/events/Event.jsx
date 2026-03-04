@@ -1,54 +1,84 @@
 import React from 'react';
 import { Card, Col, Button, Badge } from 'react-bootstrap';
-// import placeholder from '../../assets/placeholder.jpg';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { deleteEvent } from "../../services/api";
 
 function Event({ event, buy }) {
+  const navigate = useNavigate();
+
+  const handleDelete = async () => {
+    await deleteEvent(event.id);
+    window.location.reload();
+  };
+
   return (
     <Col md={4} className="mb-4">
       <Card>
         <Card.Img
           variant="top"
-          src={`/images/${event.image}`} // Assuming images are in public/images/
+          src={`/images/${event.image}`}
           alt={event.name}
-          style={{ height: 200}}
+          style={{ height: 200 }}
         />
-        
+
         <Card.Body>
           <Card.Title>
-            <Link to = {`/events/${event.name}`}>
+            <Link to={`/events/${event.id}`}>
               {event.name}
             </Link>
-            </Card.Title>
-            
+          </Card.Title>
+
           <Card.Text>{event.description}</Card.Text>
+
           <p><strong>Prix :</strong> {event.price} TND</p>
+
           <p>
-            <strong>Billets :</strong>{' '}
+            <strong>Billets :</strong>{" "}
             {event.nbTickets === 0
-              ? <Badge bg="danger">Sold Out</Badge>
-              : <Badge bg="success">{event.nbTickets}</Badge>
+              ? <Badge bg="secondary">Sold Out</Badge>
+              : <Badge bg="secondary">{event.nbTickets}</Badge>
             }
           </p>
+
           <p><strong>Participants :</strong> {event.nbParticipants}</p>
 
           {/* Bouton Book */}
           <Button
-            variant="primary"
+            variant="light"
             onClick={() => buy(event.id)}
             disabled={event.nbTickets === 0}
             className="me-2"
           >
-            {event.nbTickets === 0 ? 'Sold Out' : 'Book an event'}
+            {event.nbTickets === 0 ? 'Sold Out' : 'Book'}
           </Button>
 
-          {/* Bouton Like/Dislike */}
+          {/* Bouton Like */}
           <Button
-            variant={event.like ? 'danger' : 'outline-danger'}
+            variant="light"
             onClick={() => buy(event.id, 'like')}
+            className="me-2"
           >
-            {event.like ? '❤️ Dislike' : '🤍 Like'}
+            {event.like ? 'Dislike' : 'Like'}
           </Button>
+
+          {/* Bouton Update */}
+          <Button
+            variant="light"
+            onClick={() => navigate(`/update/${event.id}`)}
+            className="me-2 mt-2"
+          >
+            Update
+          </Button>
+
+          {/* Bouton Delete */}
+          <Button
+            variant="light"
+            onClick={handleDelete}
+            className="mt-2"
+          >
+            Delete
+          </Button>
+
         </Card.Body>
       </Card>
     </Col>
