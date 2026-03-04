@@ -12,10 +12,10 @@
     },
     {
       "id": "2d14",
-      "name": "zahra",
+      "name": "zahra123",
       "description": "hhhhhhhhh",
-      "price": "19",
-      "nbTickets": "50",
+      "price": 19,
+      "nbTickets": 50,
       "image": "dd.jpg"
     }
   ],

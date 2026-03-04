@@ -13,10 +13,23 @@ function UpdateEvent() {
     nbTickets: "",
   });
 
+  const [loading, setLoading] = useState(false);
+  const [loadingData, setLoadingData] = useState(true);
+  const [error, setError] = useState("");
+
   useEffect(() => {
-    getallEvents(id).then((res) => {
-      setForm(res.data);
-    });
+    const fetchEvent = async () => {
+      try {
+        const res = await getallEvents(id);
+        setForm(res.data);
+      } catch (err) {
+        setError("Erreur lors du chargement des données");
+      } finally {
+        setLoadingData(false);
+      }
+    };
+
+    fetchEvent();
   }, [id]);
 
   const handleChange = (e) =>
@@ -24,13 +37,32 @@ function UpdateEvent() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await editEvent(id, form);
-    navigate("/events");
+
+    try {
+      setLoading(true);
+      setError("");
+
+      await editEvent(id, {
+        ...form,
+        price: Number(form.price),
+        nbTickets: Number(form.nbTickets),
+      });
+
+      navigate("/events");
+    } catch (err) {
+      setError("Erreur lors de la mise à jour");
+    } finally {
+      setLoading(false);
+    }
   };
+
+  if (loadingData) return <p>Chargement...</p>;
 
   return (
     <div>
       <h2>Modifier l'événement</h2>
+
+      {error && <p style={{ color: "red" }}>{error}</p>}
 
       <form onSubmit={handleSubmit}>
         <div>
@@ -63,6 +95,7 @@ function UpdateEvent() {
             value={form.price}
             onChange={handleChange}
             required
+            min="0"
           />
         </div>
 
@@ -74,11 +107,14 @@ function UpdateEvent() {
             value={form.nbTickets}
             onChange={handleChange}
             required
+            min="0"
           />
         </div>
 
         <br />
-        <button type="submit">Mettre à jour</button>
+        <button type="submit" disabled={loading}>
+          {loading ? "Mise à jour..." : "Mettre à jour"}
+        </button>
       </form>
     </div>
   );

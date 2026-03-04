@@ -12,18 +12,47 @@ function AddEvent() {
     nbTickets: "",
   });
 
-  const handleChange = (e) =>
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await addEvent(form);
-    navigate("/events");
+
+    try {
+      setLoading(true);
+      setError("");
+
+      await addEvent({
+        ...form,
+        price: Number(form.price),
+        nbTickets: Number(form.nbTickets),
+      });
+
+      // Reset form
+      setForm({
+        name: "",
+        description: "",
+        price: "",
+        nbTickets: "",
+      });
+
+      navigate("/events");
+    } catch (err) {
+      setError("Erreur lors de l'ajout de l'événement");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div>
       <h2>Ajouter un événement</h2>
+
+      {error && <p style={{ color: "red" }}>{error}</p>}
 
       <form onSubmit={handleSubmit}>
         <div>
@@ -56,6 +85,7 @@ function AddEvent() {
             value={form.price}
             onChange={handleChange}
             required
+            min="0"
           />
         </div>
 
@@ -67,11 +97,14 @@ function AddEvent() {
             value={form.nbTickets}
             onChange={handleChange}
             required
+            min="0"
           />
         </div>
 
         <br />
-        <button type="submit">Ajouter</button>
+        <button type="submit" disabled={loading}>
+          {loading ? "Ajout en cours..." : "Ajouter"}
+        </button>
       </form>
     </div>
   );
