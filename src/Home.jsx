@@ -1,5 +1,7 @@
 import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import Counter from "./components/Counter";
+import Favorites from "./components/events/Favorites";
 
 export default function Home() {
   const navigate = useNavigate();
@@ -17,6 +19,8 @@ export default function Home() {
           Go to Events
         </Button>
       </div>
+      <Counter/>
+      <Favorites/>
     </div>
   );
 }

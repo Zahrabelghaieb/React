@@ -2,16 +2,21 @@ import React, { useState, useEffect } from 'react';
 import { Row, Alert, Container } from 'react-bootstrap';
 import Event from './Event';
 import { getallEvents } from "../../services/api";
+import useEventStore from '../../store/useEventStore';
+import useFavoriteStore from '../../store/useFavoriteStore';
+
 function Events() {
-  const [events, setEvents] = useState([]);
   const [showWelcome, setShowWelcome] = useState(false);
   const [bookingMsg, setBookingMsg] = useState('');
+
+  const { events, populateEvents, updateEvent, deleteEvent } = useEventStore();
+  const { addFavorite, removeFavorite, isFavorite } = useFavoriteStore();
 
   useEffect(() => {
     console.log('Composant monté');
     setShowWelcome(true);
 
-    getallEvents().then((res) => setEvents(res.data));
+    getallEvents().then((res) => populateEvents(res.data));
 
     const timer = setTimeout(() => {
       setShowWelcome(false);
@@ -28,23 +33,37 @@ function Events() {
   });
 
   const buy = (id, action = 'book') => {
-    setEvents(events.map(event => {
-      if (event.id === id) {
-        if (action === 'like') {
-          return { ...event, like: !event.like };
-        }
-        if (event.nbTickets > 0) {
-          setBookingMsg('You have booked an event !');
-          setTimeout(() => setBookingMsg(''), 2000);
-          return {
-            ...event,
-            nbTickets: event.nbTickets - 1,
-            nbParticipants: event.nbParticipants + 1
-          };
-        }
+    const event = events.find(e => e.id === id);
+    if (!event) return;
+
+    if (action === 'like') {
+      updateEvent({ ...event, like: !event.like });
+      return;
+    }
+
+    if (action === 'delete') {
+      deleteEvent(id);
+      return;
+    }
+
+    if (action === 'favorite') {
+      if (isFavorite(id)) {
+        removeFavorite(id);
+      } else {
+        addFavorite(event);
       }
-      return event;
-    }));
+      return;
+    }
+
+    if (event.nbTickets > 0) {
+      setBookingMsg('You have booked an event !');
+      setTimeout(() => setBookingMsg(''), 2000);
+      updateEvent({
+        ...event,
+        nbTickets: event.nbTickets - 1,
+        nbParticipants: event.nbParticipants + 1
+      });
+    }
   };
 
   return (
@@ -53,7 +72,7 @@ function Events() {
 
       {showWelcome && (
         <Alert variant="info" className="text-center">
-           Bienvenue sur notre plateforme d'événements !
+          Bienvenue sur notre plateforme d'événements !
         </Alert>
       )}
 
@@ -65,7 +84,12 @@ function Events() {
 
       <Row>
         {events.map(event => (
-          <Event key={event.id} event={event} buy={buy} />
+          <Event
+            key={event.id}
+            event={event}
+            buy={buy}
+            isFavorite={isFavorite(event.id)}
+          />
         ))}
       </Row>
     </Container>

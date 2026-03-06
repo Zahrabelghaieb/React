@@ -1,22 +1,29 @@
 {
   "events": [
     {
-      "id": "2",
-      "name": "Festival de la médina de Tunis",
-      "description": "Le lorem ipsum est, en imprimerie, une suite de mots sans signification utilisée à titre provisoire pour calibrer une mise en page",
-      "image": "event2.jpg",
-      "price": 15,
-      "nbTickets": 4,
-      "nbParticipants": 30,
-      "like": false
-    },
-    {
       "id": "2d14",
       "name": "zahra123",
       "description": "hhhhhhhhh",
       "price": 19,
       "nbTickets": 50,
       "image": "dd.jpg"
+    },
+    {
+      "id": "12b1",
+      "name": "silva",
+      "description": "hhhhhhhhhhhh",
+      "price": 20,
+      "nbTickets": 60,
+      "nbParticipants": 30,
+      "image": "event2.jpg"
+    },
+    {
+      "id": "f6db",
+      "name": ",",
+      "description": ",",
+      "price": 1,
+      "nbTickets": 1,
+      "nbParticipants": 30
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

@@ -1,15 +1,9 @@
 import React from 'react';
 import { Card, Col, Button, Badge } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
-import { deleteEvent } from "../../services/api";
 
-function Event({ event, buy }) {
+function Event({ event, buy, isFavorite }) {
   const navigate = useNavigate();
-
-  const handleDelete = async () => {
-    await deleteEvent(event.id);
-    window.location.reload();
-  };
 
   return (
     <Col md={4} className="mb-4">
@@ -35,8 +29,8 @@ function Event({ event, buy }) {
           <p>
             <strong>Billets :</strong>{" "}
             {event.nbTickets === 0
-              ? <Badge bg="secondary">Sold Out</Badge>
-              : <Badge bg="secondary">{event.nbTickets}</Badge>
+              ? <Badge bg="danger">Sold Out</Badge>
+              : <Badge bg="success">{event.nbTickets}</Badge>
             }
           </p>
 
@@ -58,7 +52,16 @@ function Event({ event, buy }) {
             onClick={() => buy(event.id, 'like')}
             className="me-2"
           >
-            {event.like ? 'Dislike' : 'Like'}
+            {event.like ? '👎 Dislike' : '👍 Like'}
+          </Button>
+
+          {/* Bouton Favoris */}
+          <Button
+            variant={isFavorite ? "warning" : "outline-warning"}
+            onClick={() => buy(event.id, 'favorite')}
+            className="me-2"
+          >
+            {isFavorite ? '⭐ Retirer' : '⭐ Favoris'}
           </Button>
 
           {/* Bouton Update */}
@@ -67,16 +70,16 @@ function Event({ event, buy }) {
             onClick={() => navigate(`/update/${event.id}`)}
             className="me-2 mt-2"
           >
-            Update
+            ✏️ Update
           </Button>
 
           {/* Bouton Delete */}
           <Button
-            variant="light"
-            onClick={handleDelete}
+            variant="danger"
+            onClick={() => buy(event.id, 'delete')}
             className="mt-2"
           >
-            Delete
+            🗑️ Delete
           </Button>
 
         </Card.Body>
